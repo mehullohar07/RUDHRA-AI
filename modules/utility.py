@@ -1,10 +1,10 @@
-from  datetime import datetime
+from datetime import datetime
+
+from core.assistant import ASSISTANT_NAME, VERSION
 from modules.voice import speak
 
-VERSION = "0.4"
-
 def greet():
-    text = "Namaste Mehul! How can I assist you today?"
+    text = "Namaste! How can I assist you today?"
     print(text)
     speak(text)
 
@@ -29,12 +29,12 @@ def creator():
     speak(text)
 
 def who_are_you():
-    text = "I am Ashwatth, your AI assistant."
+    text = "I am RUDHRA, your AI assistant."
     print(text)
     speak(text)
 
 def version():
-    text = f"Ashwatthama AI Version: {VERSION}"
+    text = f"{ASSISTANT_NAME} Version: {VERSION}"
     print(text)
     speak(text)
 

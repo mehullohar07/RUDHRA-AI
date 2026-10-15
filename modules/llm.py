@@ -1,8 +1,8 @@
-
 import os
 
 from dotenv import load_dotenv
 from groq import Groq
+from core.assistant import ASSISTANT_NAME
 
 load_dotenv()
 
@@ -23,7 +23,7 @@ def get_ai_response(prompt):
                 {
                     "role": "system",
                     "content": (
-                        "You are Ashwatthama AI, a helpful personal "
+                        f"You are {ASSISTANT_NAME}, a helpful personal "
                         "assistant created by Mehul. Give clear, "
                         "accurate, and concise answers."
                     ),

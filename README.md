@@ -1,37 +1,38 @@
-# Ashwatthama AI
+# RUDHRA AI
 
-A Python-based personal AI assistant that combines voice commands, desktop automation, and AI-powered conversational responses. Built as a step-by-step learning project focused on practical AI engineering and modular software development.
+A Python-based personal desktop assistant and the next evolution of Ashwatthama AI. This milestone updates the project identity while preserving the existing command-line assistant, Tkinter chat GUI, Groq responses, and voice/utility modules.
 
-**Current Version:** `v0.4`
+**Current version:** `v0.5` (identity migration milestone)
 
-## Features
+## Existing features
 
 - AI-powered conversational responses using the Groq API
-- Text-based interaction mode
-- Voice-based command input
-- Text-to-speech responses
-- Launch supported Windows applications
-- Open supported websites such as YouTube and Instagram
-- Display the current date and time
-- Handle predefined commands and general AI queries
+- Command-line text and voice interaction
+- Tkinter desktop chat interface
+- Speech recognition and text-to-speech for supported commands
+- Launch supported Windows applications and open supported websites
+- Date, time, help, creator, and version commands
 - Modular Python project structure
 
-## Tech Stack
+> The multi-agent planner, specialist agents, and execution verification are planned work, not implemented features yet.
 
-- **Language:** Python
-- **AI Integration:** Groq API
-- **Configuration:** Environment variables using `python-dotenv`
-- **Voice Input:** SpeechRecognition
-- **Text-to-Speech:** pyttsx3
-- **Interface:** Command-line interface
+## Tech stack
 
-## Project Structure
+- Python 3
+- Groq API (`openai/gpt-oss-20b`)
+- Tkinter GUI (included with most standard Python installations)
+- `python-dotenv`, `SpeechRecognition`, `PyAudio`, and `pyttsx3`
+
+## Project structure
 
 ```text
-Ashwatthama-AI/
+RUDHRA-AI/
 ├── core/
 │   ├── assistant.py
 │   └── command_handler.py
+├── gui/
+│   ├── __init__.py
+│   └── app.py
 ├── modules/
 │   ├── apps.py
 │   ├── llm.py
@@ -45,92 +46,73 @@ Ashwatthama-AI/
 └── README.md
 ```
 
-## Getting Started
+## Setup
 
-### Prerequisites
+Use Python 3.10 or newer. Some desktop and microphone commands are designed for Windows.
 
-- Python 3
-- A Windows computer for the supported desktop commands
-- A microphone for voice input
-- A Groq API key for AI-powered responses
+1. Open the project folder in VS Code and open its terminal.
+2. Create and activate a virtual environment if desired.
+3. Install dependencies:
 
-### 1. Clone the repository
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
+4. Copy `.env.example` to `.env` and set `GROQ_API_KEY` in your local `.env` file. Never paste your key into chat or commit `.env` to GitHub.
+
+## Run the assistant
+
+### Desktop GUI
 
 ```bash
-git clone https://github.com/mehullohar07/Ashwatthama-AI.git
-cd Ashwatthama-AI
+python -m gui.app
 ```
 
-### 2. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Configure your API key
-
-Create a `.env` file in the project root and add your Groq API key:
-
-```env
-GROQ_API_KEY=your_groq_api_key_here
-```
-
-Replace the placeholder with your own key.
-
-**Security:** Never upload `.env` or expose your API key publicly. Keep `.env` in `.gitignore`. If sharing the project, provide a `.env.example` containing only placeholder values.
-
-### 4. Run Ashwatthama AI
+### Command-line interface
 
 ```bash
 python main.py
 ```
 
-Select the available interaction mode and start using the assistant.
+The CLI asks you to select text or voice mode. Voice mode requires a working microphone and the relevant audio dependencies. AI responses require internet access and a valid Groq API key.
 
-## Version History
+## Quick checks
 
-### v0.4
-- Integrated the Groq API for AI-powered responses.
-- Added text and voice interaction modes.
-- Connected AI responses with the existing command handler.
-- Preserved predefined commands alongside conversational AI.
+Compile the Python files without launching the GUI or microphone:
 
-### v0.3.1
-- Added microphone-based speech recognition.
-- Updated the runtime dependency list.
-- Updated the assistant banner and version output.
+```bash
+python -m compileall -q core gui modules main.py
+```
 
-### v0.3
-- Added text-to-speech responses using `pyttsx3`.
-- Added the version command.
-- Consolidated application commands.
-- Introduced the voice module.
+Then run the GUI and CLI separately and test basic commands such as `help`, `version`, `current time`, and a simple AI question. Application launching depends on the local computer and installed applications.
 
-### v0.2
-- Organized the project into `core/` and `modules/`.
-- Separated command handling, application actions, and utilities.
+## Version history
 
-### v0.1
-- Initial command-line assistant.
+### v0.5 - RUDHRA AI foundation
+
+- Updated the assistant identity and version in the CLI, GUI, LLM system prompt, and version command.
+- Documented both GUI and CLI startup paths.
+- Preserved existing features while preparing for a future modular agent architecture.
+
+### Earlier Ashwatthama AI milestones
+
+- v0.4: Groq API responses and text/voice CLI interaction.
+- v0.3.1: Speech recognition and runtime dependency updates.
+- v0.3: Text-to-speech and consolidated command handling.
+- v0.2: Modular `core/` and `modules/` structure.
+- v0.1: Initial command-line assistant.
 
 ## Roadmap
 
-- **v0.5:** Desktop graphical interface using Tkinter
-- **v0.6:** Tool calling and more capable command execution
-- **v0.7:** Memory features
-- **v0.8:** Retrieval-Augmented Generation (RAG)
-- **v0.9:** FastAPI integration
-- **v0.10:** Docker support
-- **v1.0:** Advanced agentic AI capabilities
+1. RUDHRA main agent and structured task routing.
+2. VAJRA: controlled PC automation.
+3. GARUDA: web research; MANI: file operations with confirmation for destructive actions.
+4. MEDHA: knowledge tasks; NETRA: verification of important outcomes.
+5. NAAD: voice integration with the assistant workflow.
+6. Logging, tests, UI polish, and documentation.
 
-*Roadmap items represent planned development, not features already released.*
+Roadmap items are planned and should not be treated as existing features.
 
 ## Author
 
-**Mehul Lohar**
-
-- GitHub: https://github.com/mehullohar07
-
----
-
-Ashwatthama AI is an evolving personal AI assistant project built to explore Python, AI integration, automation, and practical software engineering.
+**Mehul Lohar** · [GitHub](https://github.com/mehullohar07)

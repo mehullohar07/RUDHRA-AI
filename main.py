@@ -1,7 +1,7 @@
-
 from core.command_handler import execute_command
 from core.assistant import banner
 from modules.voice import take_command
+from core.assistant import ASSISTANT_NAME
 
 def main():
     banner()
@@ -21,7 +21,7 @@ def main():
         else:
             print("Invalid choice. Please enter 1 or 2.")
 
-    print(f"\nAshwatthama started in {mode.upper()} mode.")
+    print(f"\n{ASSISTANT_NAME} started in {mode.upper()} mode.")
     print("Type 'exit' to quit.\n")
 
     while True:

@@ -1,9 +1,8 @@
-
 from modules.apps import *
 from modules.utility import *
 from modules.llm import get_ai_response
 from modules.voice import speak
-
+from core.assistant import ASSISTANT_NAME
 
 def execute_command(command):
     command = command.strip().lower()
@@ -55,9 +54,9 @@ def execute_command(command):
         return "exit"
 
     else:
-        print("\nAshwatthama is thinking...")
+        print(f"\n{ASSISTANT_NAME} is thinking...")
         response = get_ai_response(command)
-        print(f"\nAshwatthama: {response}\n")
+        print(f"\n{ASSISTANT_NAME}: {response}\n")
         speak(response)
 
     return None

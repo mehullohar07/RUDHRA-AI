@@ -1,10 +1,5 @@
-ASSISTANT_NAME = "ASHWATTHAMA"
-VERSION = "0.4"
+ASSISTANT_NAME = "RUDHRA AI"
+VERSION = "0.5"
 
 def banner():
-    print("""
-=================================
-        ASHWATTHAMA AI
-        Version 0.4
-=================================
-""")
+    print(f"\n{'=' * 33}\n        {ASSISTANT_NAME}\n        Version {VERSION}\n{'=' * 33}\n")
