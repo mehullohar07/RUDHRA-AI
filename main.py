@@ -1,7 +1,7 @@
-from core.command_handler import execute_command
-from core.assistant import banner
-from modules.voice import take_command
-from core.assistant import ASSISTANT_NAME
+from core.command_handler import process_command
+from core.assistant import banner, ASSISTANT_NAME
+from modules.voice import take_command, speak
+
 
 def main():
     banner()
@@ -26,18 +26,22 @@ def main():
 
     while True:
         if mode == "text":
-            command = input("You: ").strip().lower()
+            command = input("You: ").strip()
         else:
             command = take_command()
 
         if not command:
             continue
 
-        result = execute_command(command)
+        result = process_command(command)
+        print(f"\n{ASSISTANT_NAME}: {result['text']}\n")
 
-        if result == "exit":
-            print("Goodbye!")
+        if result["speak"]:
+            speak(result["text"])
+
+        if result["should_exit"]:
             break
+
 
 if __name__ == "__main__":
     main()

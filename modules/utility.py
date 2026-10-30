@@ -1,45 +1,38 @@
 from datetime import datetime
 
 from core.assistant import ASSISTANT_NAME, VERSION
-from modules.voice import speak
+
 
 def greet():
-    text = "Namaste! How can I assist you today?"
-    print(text)
-    speak(text)
+    return "Namaste! How can I assist you today?"
+
 
 def goodbye():
-    text = "Goodbye! have a productive day ahead!"
-    print(text)
-    speak(text)
+    return "Goodbye! Have a productive day ahead!"
+
 
 def current_time():
-    text = "Current Time: " + datetime.now().strftime("%H:%M:%S")
-    print(text)
-    speak(text)
+    return "Current Time: " + datetime.now().strftime("%H:%M:%S")
+
 
 def current_date():
-    text = "Current Date: " + datetime.now().strftime("%d/%m/%Y")
-    print(text)
-    speak(text)
+    return "Current Date: " + datetime.now().strftime("%d/%m/%Y")
+
 
 def creator():
-    text = "My creator is Mehul."
-    print(text)
-    speak(text)
+    return "My creator is Mehul."
+
 
 def who_are_you():
-    text = "I am RUDHRA, your AI assistant."
-    print(text)
-    speak(text)
+    return "I am RUDHRA, your AI assistant."
+
 
 def version():
-    text = f"{ASSISTANT_NAME} Version: {VERSION}"
-    print(text)
-    speak(text)
+    return f"{ASSISTANT_NAME} Version: {VERSION}"
+
 
 def help_menu():
-    help_text = """
+    return """
     =========================
             HELP MENU
     =========================
@@ -67,6 +60,4 @@ def help_menu():
     13. Help
     14. Version
     15. Exit
-    """
-    print(help_text)
-    speak(help_text)
+    """.strip()

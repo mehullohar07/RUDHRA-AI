@@ -1,13 +1,15 @@
 # RUDHRA AI
 
-A Python-based personal desktop assistant and the next evolution of Ashwatthama AI. This milestone updates the project identity while preserving the existing command-line assistant, Tkinter chat GUI, Groq responses, and voice/utility modules.
+A Python-based personal desktop assistant and the next evolution of Ashwatthama AI. This milestone introduces a shared command-processing interface for the CLI and Tkinter GUI while preserving the existing Groq integration and supported commands.
 
-**Current version:** `v0.5` (identity migration milestone)
+**Current version:** `v0.6.0` (shared backend response milestone)
 
 ## Existing features
 
 - AI-powered conversational responses using the Groq API
 - Command-line text and voice interaction
+- Shared `process_command()` backend used by CLI and GUI
+- Structured command results, separated from terminal printing and text-to-speech
 - Tkinter desktop chat interface
 - Speech recognition and text-to-speech for supported commands
 - Launch supported Windows applications and open supported websites
@@ -81,12 +83,15 @@ The CLI asks you to select text or voice mode. Voice mode requires a working mic
 Compile the Python files without launching the GUI or microphone:
 
 ```bash
-python -m compileall -q core gui modules main.py
+python -m compileall -q core gui modules main.py tests
+python -m unittest discover -s tests -v
 ```
 
 Then run the GUI and CLI separately and test basic commands such as `help`, `version`, `current time`, and a simple AI question. Application launching depends on the local computer and installed applications.
 
 ## Version history
+
+- v0.6.0: Added a reusable shared command-processing interface, structured responses, GUI command integration, and command-handler tests.
 
 ### v0.5 - RUDHRA AI foundation
 
