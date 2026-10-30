@@ -1,62 +1,86 @@
-from modules.apps import *
-from modules.utility import *
+from modules.apps import open_app
 from modules.llm import get_ai_response
-from modules.voice import speak
+from modules import utility
 from core.assistant import ASSISTANT_NAME
 
+
+COMMANDS = {
+    "hello": utility.greet,
+    "creator": utility.creator,
+    "who are you?": utility.who_are_you,
+    "current time": utility.current_time,
+    "current date": utility.current_date,
+    "help": utility.help_menu,
+    "version": utility.version,
+}
+
+APP_COMMANDS = {
+    "open chrome": "chrome",
+    "open paint": "paint",
+    "open calculator": "calculator",
+    "open vscode": "vscode",
+    "open notepad": "notepad",
+    "open instagram": "instagram",
+    "open youtube": "youtube",
+}
+
+
+def process_command(command):
+    """Process a request and return data without printing or speaking it.
+
+    The returned dictionary is shared by CLI, GUI, and future interfaces.
+    """
+    normalized_command = command.strip().lower()
+
+    if not normalized_command:
+        return {
+            "text": "Please enter a command.",
+            "should_exit": False,
+            "source": "system",
+            "speak": False,
+        }
+
+    if normalized_command in ("bye", "exit", "quit"):
+        return {
+            "text": utility.goodbye(),
+            "should_exit": True,
+            "source": "command",
+            "speak": True,
+        }
+
+    if normalized_command in COMMANDS:
+        return {
+            "text": COMMANDS[normalized_command](),
+            "should_exit": False,
+            "source": "command",
+            "speak": True,
+        }
+
+    if normalized_command in APP_COMMANDS:
+        return {
+            "text": open_app(APP_COMMANDS[normalized_command]),
+            "should_exit": False,
+            "source": "command",
+            "speak": False,
+        }
+
+    response = get_ai_response(command.strip())
+    return {
+        "text": response or "No response received from the AI service.",
+        "should_exit": False,
+        "source": "ai",
+        "speak": True,
+    }
+
+
 def execute_command(command):
-    command = command.strip().lower()
+    """Legacy CLI adapter; new interfaces should call process_command()."""
+    result = process_command(command)
+    print(f"\n{ASSISTANT_NAME}: {result['text']}\n")
 
-    if command == "hello":
-        greet()
+    if result["speak"]:
+        from modules.voice import speak
 
-    elif command == "creator":
-        creator()
+        speak(result["text"])
 
-    elif command == "who are you?":
-        who_are_you()
-
-    elif command == "current time":
-        current_time()
-
-    elif command == "current date":
-        current_date()
-
-    elif command == "open chrome":
-        open_app("chrome")
-
-    elif command == "help":
-        help_menu()
-
-    elif command == "open paint":
-        open_app("paint")
-
-    elif command == "open calculator":
-        open_app("calculator")
-
-    elif command == "open vscode":
-        open_app("vscode")
-
-    elif command == "open notepad":
-        open_app("notepad")
-
-    elif command == "open instagram":
-        open_app("instagram")
-
-    elif command == "open youtube":
-        open_app("youtube")
-
-    elif command == "version":
-        version()
-
-    elif command in ("bye", "exit", "quit"):
-        goodbye()
-        return "exit"
-
-    else:
-        print(f"\n{ASSISTANT_NAME} is thinking...")
-        response = get_ai_response(command)
-        print(f"\n{ASSISTANT_NAME}: {response}\n")
-        speak(response)
-
-    return None
+    return "exit" if result["should_exit"] else None
