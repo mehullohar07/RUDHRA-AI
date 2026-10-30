@@ -1,7 +1,7 @@
 import tkinter as tk
 import threading
 
-from modules.llm import get_ai_response
+from core.command_handler import process_command
 from core.assistant import ASSISTANT_NAME, VERSION
 
 class RudhraGUI:
@@ -157,25 +157,24 @@ class RudhraGUI:
 
     def get_response_in_background(self, message):
         try:
-            response = get_ai_response(message)
-
-            if not response:
-                response = "No response received from the AI service."
+            result = process_command(message)
+            response = result["text"]
+            should_exit = result["should_exit"]
 
         except Exception as error:
-            print(f"AI Error: {error}")
-            response = "Sorry, something went wrong while contacting the AI."
+            response = "Sorry, something went wrong while processing your request."
+            should_exit = False
 
         try:
             self.root.after(
                 0,
-                lambda: self.show_response(response),
+                lambda: self.show_response(response, should_exit),
             )
         except tk.TclError:
             pass
 
 
-    def show_response(self, response):
+    def show_response(self, response, should_exit=False):
         if not self.root.winfo_exists():
             return
 
@@ -201,6 +200,9 @@ class RudhraGUI:
         self.send_button.configure(state="normal")
         self.status_label.configure(text="Ready")
         self.message_input.focus_set()
+
+        if should_exit:
+            self.close_app()
 
     def close_app(self):
         self.root.destroy()
