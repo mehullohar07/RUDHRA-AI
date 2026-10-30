@@ -1,7 +1,6 @@
 import os
 
 from dotenv import load_dotenv
-from groq import Groq
 from core.assistant import ASSISTANT_NAME
 
 load_dotenv()
@@ -15,6 +14,8 @@ def get_ai_response(prompt):
         return "Groq API key missing. Please check your .env file."
 
     try:
+        from groq import Groq
+
         client = Groq(api_key=api_key)
 
         response = client.chat.completions.create(
@@ -39,8 +40,7 @@ def get_ai_response(prompt):
         answer = response.choices[0].message.content
         return answer.strip() if answer else "No response generated."
 
-    except Exception as error:
-        print(f"AI Error: {error}")
+    except Exception:
         return (
             "Sorry, I could not connect to the AI service. "
             "Check your API key, internet connection, and model availability."

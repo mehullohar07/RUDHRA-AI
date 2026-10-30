@@ -14,15 +14,22 @@ apps = {
 
 
 def open_app(app_name):
+    """Open a supported application or website and return a status message."""
     if app_name not in apps:
-        print(f"Application '{app_name}' not found.")
-        return
+        return f"Application '{app_name}' not found."
 
     app = apps[app_name]
 
     if app.startswith(("http://", "https://")):
-        webbrowser.open(app)
-        return
+        try:
+            opened = webbrowser.open(app)
+            return (
+                f"Opening {app_name.title()} in your browser."
+                if opened
+                else f"Could not open {app_name.title()} in your browser."
+            )
+        except OSError as error:
+            return f"Could not open {app_name}: {error}"
 
     if app_name == "chrome":
         chrome_paths = [
@@ -41,16 +48,22 @@ def open_app(app_name):
             if os.path.isfile(chrome_path):
                 try:
                     subprocess.Popen([chrome_path])
-                    return
+                    return "Opening Chrome."
                 except OSError as error:
-                    print(f"Could not open Chrome: {error}")
-                    return
+                    return f"Could not open Chrome: {error}"
 
-        print("Chrome installation not found. Opening default browser...")
-        webbrowser.open("https://www.google.com")
-        return
+        try:
+            opened = webbrowser.open("https://www.google.com")
+            return (
+                "Chrome installation not found. Opening your default browser."
+                if opened
+                else "Chrome was not found and the default browser could not be opened."
+            )
+        except OSError as error:
+            return f"Chrome was not found. Could not open the default browser: {error}"
 
     try:
         subprocess.Popen(app)
+        return f"Opening {app_name.title()}."
     except OSError as error:
-        print(f"Could not open {app_name}: {error}")
+        return f"Could not open {app_name}: {error}"
